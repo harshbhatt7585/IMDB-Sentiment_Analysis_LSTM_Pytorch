@@ -4,40 +4,11 @@ from torch.utils.data import Dataset, DataLoader
 from torchtext.data.utils import get_tokenizer 
 # from torchtext.vocab import vocab
 from torch.nn.utils.rnn import pad_sequence
-import torch.nn.functional as F
-from collections import Counter
-import pandas as pd
-import os
 from torchtext.datasets import IMDB
 from torchtext import data
-import random
 from torchtext.vocab import build_vocab_from_iterator
 from torch.utils.data.dataset import random_split
-from torchtext.datasets import AG_NEWS
 from torchtext.data.functional import to_map_style_dataset
-
-class TextDataset(Dataset):
-    def __init__(self, X, y, dataset_type='train'):
-        len_ = len(X)
-        self.X = X
-        self.y = torch.tensor(y)
-
-        if(dataset_type == 'train'):
-            self.X = self.X[: int(len_ * 0.8)]
-            self.y = self.y[: int(len_ * 0.8)]
-        else:
-            self.X = self.X[int(len_ * 0.8): ]
-            self.y = self.y[int(len_ * 0.8): ]
-        
-        self.size = len(self.X)
-
-    
-    
-    def __getitem__(self, idx): 
-        return self.X[idx], self.y[idx]
-    
-    def __len__(self):
-        return self.size  
 
 
 class Classifier(nn.Module):
